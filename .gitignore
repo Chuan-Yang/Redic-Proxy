@@ -1,0 +1,9 @@
+### Code ###
+.vscode/*
+
+## Visual Studio ##
+.vs
+
+## Test Results ##
+*.trx
+/src/.run
