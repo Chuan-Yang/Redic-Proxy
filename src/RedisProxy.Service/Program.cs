@@ -9,8 +9,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var multiplexer = ConnectionMultiplexer.Connect(builder.Configuration["Redis:Port"]);
-builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+var redisConfig = new ConfigurationOptions
+{
+    EndPoints =
+    {
+        { builder.Configuration["Redis:Address"], int.Parse(builder.Configuration["Redis:Port"]) },
+    },
+    Password = builder.Configuration["Redis:Password"]
+};
+
+var server = ConnectionMultiplexer.Connect(redisConfig);
+builder.Services.AddSingleton<IConnectionMultiplexer>(server);
 
 var app = builder.Build();
 
