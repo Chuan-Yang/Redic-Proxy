@@ -11,10 +11,12 @@ public class LRUCache : ICache
     // Since the capacity is not used in this example, so it is set as private
     // But if it is needed, we can have a getter for it or any other properties
     private readonly int _capacity;
+    private readonly int _expiryTime;
 
     public LRUCache(IOptionsMonitor<CacheOptions> options)
     {
         _capacity = options.CurrentValue.Capacity;
+        _expiryTime = options.CurrentValue.ExpiryTime;
         _map = new Dictionary<string, LRUNode>();
         _cache = new LRUDoubleLinkedList(_capacity);
     }
@@ -26,6 +28,15 @@ public class LRUCache : ICache
             return null;
 
         LRUNode node = _map[key];
+        var existingTime = DateTime.Now.Subtract(node.Created).Seconds;
+        if (existingTime >= _expiryTime)
+        {
+            _cache.RemoveNode(node);
+            _map.Remove(node.Key);
+
+            return null;
+        }
+
         _cache.MoveToHead(node);
 
         return node.Value;
