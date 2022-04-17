@@ -1,13 +1,22 @@
+using Microsoft.Extensions.Options;
+using RedisProxy.Service.Configs;
+
 namespace RedisProxy.Service.Services.Cache.LRU;
 
 public class LRUCache : ICache
 {
     private readonly Dictionary<string, LRUNode> _map;
     private readonly LRUDoubleLinkedList _cache;
-    public LRUCache()
+
+    // Since the capacity is not used in this example, so it is set as private
+    // But if it is needed, we can have a getter for it or any other properties
+    private readonly int _capacity;
+
+    public LRUCache(IOptionsMonitor<CacheOptions> options)
     {
+        _capacity = options.CurrentValue.Capacity;
         _map = new Dictionary<string, LRUNode>();
-        _cache = new LRUDoubleLinkedList(2);
+        _cache = new LRUDoubleLinkedList(_capacity);
     }
 
 

@@ -30,8 +30,8 @@ public class LRUDoubleLinkedList
         node.Previous = _head;
         node.Next = _head.Next;
 
-        _head.Next = node;
         _head.Next.Previous = node;
+        _head.Next = node;
 
         _size++;
     }

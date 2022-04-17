@@ -1,3 +1,4 @@
+using RedisProxy.Service.Configs;
 using RedisProxy.Service.Services.Cache;
 using RedisProxy.Service.Services.Cache.LRU;
 using StackExchange.Redis;
@@ -10,6 +11,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<CacheOptions>(builder.Configuration.GetSection("Cache"));
 
 var redisConfig = new ConfigurationOptions
 {
