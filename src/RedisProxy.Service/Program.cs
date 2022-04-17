@@ -1,3 +1,5 @@
+using RedisProxy.Service.Services.Cache;
+using RedisProxy.Service.Services.Cache.LRU;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,8 @@ var redisConfig = new ConfigurationOptions
 
 var server = ConnectionMultiplexer.Connect(redisConfig);
 builder.Services.AddSingleton<IConnectionMultiplexer>(server);
+
+builder.Services.AddSingleton<ICache, LRUCache>();
 
 var app = builder.Build();
 
