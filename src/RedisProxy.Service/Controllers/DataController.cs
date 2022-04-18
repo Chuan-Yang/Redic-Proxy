@@ -21,7 +21,7 @@ public class DataController : ControllerBase
     }
 
     [HttpGet("{key}")]
-    public string Get(string key)
+    public async Task<ActionResult<string>> Get(string key)
     {
         var db = _redis.GetDatabase();
 
@@ -32,7 +32,12 @@ public class DataController : ControllerBase
             value = cachedValue;
         }
         else {
-            value = db.StringGet(key);
+            value = await db.StringGetAsync(key);
+            if (value == null)
+            {
+                return NotFound("The key doesn't have a corresponding value in the database");
+            }
+
             _cache.Set(key, value);
         }
 
