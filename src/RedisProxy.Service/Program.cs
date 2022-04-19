@@ -20,7 +20,6 @@ var redisConfig = new ConfigurationOptions
     {
         { builder.Configuration["Redis:Address"], int.Parse(builder.Configuration["Redis:Port"]) },
     },
-    Password = builder.Configuration["Redis:Password"]
 };
 
 var server = ConnectionMultiplexer.Connect(redisConfig);
