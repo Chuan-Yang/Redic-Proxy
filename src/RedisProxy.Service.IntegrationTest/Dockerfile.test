@@ -1,0 +1,6 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+COPY . /app
+WORKDIR /app/src/RedisProxy.Service.IntegrationTest
+RUN curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh > /app/wait_for_it.sh \
+    && dotnet restore
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]

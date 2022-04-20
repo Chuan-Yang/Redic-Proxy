@@ -9,5 +9,13 @@ services:
       - 8080:80
     depends_on:
       - redis
+  redis-proxy-test:
+    image: redis-proxy-test
+    build:
+      context: .
+      dockerfile: ./src/RedisProxy.Service.IntegrationTest/Dockerfile.test
+    depends_on:
+      - redis
+      - redis-proxy-api
   redis:
     image: redis

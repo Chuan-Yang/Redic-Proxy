@@ -27,7 +27,14 @@ public class Tests
             .Build()
             .Get<TestConfig>();
         _httpClient = new HttpClient { BaseAddress = new Uri(_testConfig.ServiceUri) };
-        _redis = ConnectionMultiplexer.Connect($"{_testConfig.Redis.Address}:{_testConfig.Redis.Port}");
+        var redisConfig = new ConfigurationOptions
+        {
+            EndPoints =
+            {
+                { _testConfig.Redis.Address, _testConfig.Redis.Port },
+            },
+        };
+        _redis = ConnectionMultiplexer.Connect(redisConfig);
         _db = _redis.GetDatabase();
 
         // Seed data
