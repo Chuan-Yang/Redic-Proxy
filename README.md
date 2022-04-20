@@ -1,1 +1,1 @@
-# Redic-Proxy
+# Redis-Proxy
