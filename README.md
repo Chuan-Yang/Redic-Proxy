@@ -29,7 +29,7 @@ This is our main service project, which includes the functionality of the projec
       - Double linked list + Hashmap are used to implement this
       - **Time Complexity**: O(1) for both get and put operations
 
-### RedisProxy.Service.Integation
+### RedisProxy.Service.IntegationTest
 
 This is the integration test for the main project. It connects to the same redis database as the main service connects to, which will generata some initial data for test purpose. This contains three main test cases:
   - Check if the 404 status is returned properly when there is no corresponding value for the key in database
