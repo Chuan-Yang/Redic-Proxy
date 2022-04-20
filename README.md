@@ -21,7 +21,8 @@ This is our main service project, which includes the functionality of the projec
   - Controller(DataController)
     - This is the controller which contains the only GET endpoint `GET /data/{key}` in this project
     - It uses the strategy introduced in the overview section to get the value for the passed in key
-  
+    - Parameter: the key will be received in the query or the url directly instead of from body. 
+    - Response: the response is simply a string value for the key if there is one. Otherwise, it will return a 404 bad request
   - Services(Cache)
     - This is the place storing the useful services for the project. For this one, it only contains the implementation for the cache class 
     - It contains the interface `ICache`, its implementation `LRUCache`, and all the needed elements to implement the LRU cache. For the LRU cache:
@@ -49,6 +50,13 @@ docker-compose up --build
 
 ```
 docker-compose up --build redis-proxy-api
+```
+
+### Send Request
+
+The url for the service will be `http://localhost:8080`. Here is an example request:
+```
+curl --location --request GET 'http://localhost:8080/data/ping'
 ```
 
 ## Timeline
